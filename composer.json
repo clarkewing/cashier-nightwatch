@@ -12,14 +12,14 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/psr7": "^2.0",
-        "illuminate/support": "^11.0 || ^12.0 || ^13.0",
+        "illuminate/support": "^12.0 || ^13.0",
         "laravel/nightwatch": "^1.0",
         "psr/http-message": "^1.1 || ^2.0",
         "stripe/stripe-php": "^16.0 || ^17.0"
     },
     "require-dev": {
         "laravel/pint": "^1.5",
-        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "orchestra/testbench": "^10.0 || ^11.0",
         "pestphp/pest": "^3.0 || ^4.0",
         "pestphp/pest-plugin-laravel": "^3.0 || ^4.0",
         "pestphp/pest-plugin-type-coverage": "^3.0 || ^4.0",
