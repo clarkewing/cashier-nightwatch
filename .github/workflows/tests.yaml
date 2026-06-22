@@ -1,0 +1,59 @@
+name: Tests
+
+on: ['push', 'pull_request']
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 5
+
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - php: 8.2
+            laravel: 11.*
+          - php: 8.3
+            laravel: 11.*
+          - php: 8.3
+            laravel: 12.*
+          - php: 8.4
+            laravel: 12.*
+          - php: 8.4
+            laravel: 13.*
+          - php: 8.5
+            laravel: 12.*
+          - php: 8.5
+            laravel: 13.*
+
+    name: Laravel ${{ matrix.laravel }} - PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Cache dependencies
+        uses: actions/cache@v5
+        with:
+          path: ~/.composer/cache/files
+          key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, bcmath, intl, fileinfo
+          coverage: none
+
+      - name: Install dependencies
+        run: |
+          composer remove laravel/pint pestphp/pest-plugin-type-coverage phpstan/phpstan --dev --no-update
+          composer require "laravel/framework:${{ matrix.laravel }}" --no-interaction --no-update
+          composer update --prefer-stable --prefer-dist --no-interaction
+
+      - name: List Installed Dependencies
+        run: composer show -D
+
+      - name: Unit Tests
+        run: composer test:unit
