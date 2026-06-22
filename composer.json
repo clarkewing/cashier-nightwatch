@@ -1,0 +1,67 @@
+{
+    "name": "clarkewing/cashier-nightwatch",
+    "description": "Surface Laravel Cashier (Stripe) API requests on Laravel Nightwatch timelines.",
+    "keywords": ["laravel", "cashier", "stripe", "nightwatch", "monitoring", "observability"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hugo Clarke-Wing",
+            "email": "7689302+clarkewing@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "guzzlehttp/psr7": "^2.0",
+        "illuminate/support": "^11.0 || ^12.0 || ^13.0",
+        "laravel/nightwatch": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "stripe/stripe-php": "^16.0 || ^17.0"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.5",
+        "orchestra/testbench": "^9.0 || ^10.0 || ^11.0",
+        "pestphp/pest": "^3.0 || ^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0 || ^4.0",
+        "pestphp/pest-plugin-type-coverage": "^3.0 || ^4.0",
+        "phpstan/phpstan": "^2.1",
+        "spatie/invade": "^2.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "ClarkeWing\\CashierNightwatch\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ClarkeWing\\CashierNightwatch\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ClarkeWing\\CashierNightwatch\\CashierNightwatchServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "scripts": {
+        "lint": "pint -v --parallel",
+        "test:lint": "pint --test -v --parallel",
+        "test:types": "phpstan analyse --ansi --memory-limit=-1",
+        "test:type-coverage": "pest --type-coverage --min=100 --memory-limit=-1",
+        "test:unit": "pest --colors=always",
+        "test": [
+            "@test:lint",
+            "@test:types",
+            "@test:type-coverage",
+            "@test:unit"
+        ]
+    }
+}
